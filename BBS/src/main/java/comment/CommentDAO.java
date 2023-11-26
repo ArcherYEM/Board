@@ -36,11 +36,11 @@ public class CommentDAO {
 		return ""; // database error
 	}
 
-	public int addComment(String comment, String userID) {
+	public int addComment(int bbsID, String comment, String userID) {
 	    String SQL = "INSERT INTO comment (bbsID, userID, content) VALUES (?, ?, ?)";
 	    try {
 	        PreparedStatement pstmt = conn.prepareStatement(SQL);
-	        pstmt.setInt(1, 0); // 현재 bbsID 입력되게 수정해야함
+	        pstmt.setInt(1, bbsID); // 현재 bbsID 입력되게 수정해야함
 	        pstmt.setString(2, userID);
 	        pstmt.setString(3, comment);
 	        return pstmt.executeUpdate();
