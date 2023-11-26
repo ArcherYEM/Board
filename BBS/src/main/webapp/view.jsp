@@ -141,6 +141,8 @@
 				</tbody>
 			</table>
 			<input type="submit" class="btn btn-primary pull-right" value="등록">
+			<input type="hidden" name="bbsID" value="<%= bbsID %>">
+			
 		</form>
 		</div>
 	</div>
