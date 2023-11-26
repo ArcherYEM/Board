@@ -3,6 +3,7 @@
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="bbs.Bbs" %>
 <%@ page import="bbs.BbsDAO" %>
+<%@ page import="user.User" %>
 <%@ page import="user.UserDAO" %>
 <!DOCTYPE html>
 <html>
@@ -19,6 +20,7 @@
 	if (session.getAttribute("userID") != null){
 		userID = (String)session.getAttribute("userID");
 	}
+	
 	int bbsID = 0;
 	if (request.getParameter("bbsID") != null){
 		bbsID = Integer.parseInt(request.getParameter("bbsID"));
@@ -30,6 +32,7 @@
 		script.println("location.href = 'bbs.jsp'");
 		script.println("</script>");
 	}
+	
 	Bbs bbs = new BbsDAO().getBbs(bbsID);
 	
 	String userName = null;
@@ -37,6 +40,8 @@
         UserDAO userDAO = new UserDAO();
         userName = userDAO.name(userID);
     }
+  
+  User user = new UserDAO().getUser(userID);
 %>
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
@@ -123,7 +128,6 @@
 					        </div>
 					    </td>
 					</tr>
-
 				</tbody>
 			</table>
 			<a href="bbs.jsp" class="btn btn-primary">목록</a>
@@ -135,9 +139,61 @@
 			<%
 			}
 			%>
-			<a href="write.jsp" class="btn btn-primary pull-right">작성하기</a>
+			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
 		</div>
 	</div>
+	<br/>
+	
+	<!-- 댓글 쓰기 -->
+	<div class="container">
+		<div class="row">
+			<table class="table table-striped" style="text-align:center; border: 1px solid #dddddd">
+				<thead>
+					<tr>
+						<th colspan="3" style="background-color: #eeeeee; text-align: center;">댓글</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><textarea class="form-control" placeholder="댓글 내용 입력"
+						name="bbsContent" maxlength="2048" style="height:100px"></textarea></td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="write.jsp" class="btn btn-primary pull-right">댓글 등록</a>
+		</div>
+	</div>
+	<br/>
+	
+	<!-- 댓글 보기 -->
+	<div class="container">
+		<div class="row">
+			<table class="table table-striped" style="text-align:center; border: 1px solid #dddddd">
+				<thead>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="1"><%= user.getUserName() %></td>
+						<td colspan="1" style="text-align: right;">
+								<%=
+								bbs.getBbsDate().substring(0, 11)
+								+ bbs.getBbsDate().substring(11, 13) + ":"
+								+ bbs.getBbsDate().substring(14, 16)
+								%>
+						</td>
+					</tr>
+					<tr>
+					    <td colspan="3" style="text-align: left;">
+					        <div style="min-height: 100px;">
+					            <%= bbs.getBbsContent().replaceAll(" ","&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt").replaceAll("\n", "<br>") %>
+					        </div>
+					    </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<br/>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </body>
