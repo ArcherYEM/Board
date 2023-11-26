@@ -4,6 +4,10 @@
 <%@ page import="bbs.BbsDAO"%>
 <%@ page import="user.User"%>
 <%@ page import="user.UserDAO"%>
+<%@ page import="comment.CommentDAO"%>
+<%@ page import="comment.Comment"%>
+<%@ page import="java.util.ArrayList" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -151,23 +155,35 @@
 	<!-- 댓글 보기 -->
 	<div class="container">
 		<div class="row">
+		<br/>
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 				</thead>
 				<tbody>
+				<%
+				CommentDAO commentDAO = new CommentDAO();
+				ArrayList<Comment> list = commentDAO.getList(bbsID);
+				for(int i = 0; i < list.size(); i++){
+				%>
 					<tr>
-						<td colspan="1"><%=user.getUserName()%></td>
-						<td colspan="1" style="text-align: right;"><%=bbs.getBbsDate().substring(0, 11) + bbs.getBbsDate().substring(11, 13) + ":"
-						+ bbs.getBbsDate().substring(14, 16)%></td>
+						<td colspan="1" style="text-align: left;"><%=list.get(i).getUserID()%></td>
+						<td colspan="1" style="text-align: right;"><%=
+							list.get(i).getDate().substring(0, 11)
+							+ list.get(i).getDate().substring(11, 13) + ":"
+							+ list.get(i).getDate().substring(14, 16)
+							%></td>
 					</tr>
 					<tr>
 						<td colspan="3" style="text-align: left;">
-							<div style="min-height: 100px;">
-								<%=bbs.getBbsContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt").replaceAll("\n",
-								"<br>")%>
+							<div style="min-height: 50px;">
+								<%= list.get(i).getContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt").replaceAll("\n",
+										"<br>") %>
 							</div>
 						</td>
 					</tr>
+					<%
+				}
+					%>
 				</tbody>
 			</table>
 		</div>
