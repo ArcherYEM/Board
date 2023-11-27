@@ -52,7 +52,7 @@ public class CommentDAO {
 	}
 
 	public ArrayList<Comment> getList(int bbsID) {
-	    String SQL = "SELECT bbsID, userID, content, date, commentAvailable FROM comment WHERE bbsID = ?";
+	    String SQL = "SELECT bbsID, userID, content, date, commentAvailable, commentNo FROM comment WHERE bbsID = ? AND commentAvailable = 1";
 	    ArrayList<Comment> list = new ArrayList<Comment>();
 	    try {
 	        PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -65,12 +65,51 @@ public class CommentDAO {
 	            comment.setContent(rs.getString("content"));
 	            comment.setDate(rs.getString("date"));
 	            comment.setCommentavailable(rs.getString("commentAvailable"));
+	            comment.setCommentNo(rs.getInt("commentNo"));
 	            list.add(comment);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    return list;
+	}
+	
+	public Comment getComment(int commentNo) {
+	    String SQL = "SELECT * FROM comment WHERE commentNo = ?";
+	    Comment comment = null; // 댓글 객체를 선언하고 초기화
+
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setInt(1, commentNo);
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            // 결과셋으로부터 댓글 정보를 가져와서 Comment 객체에 설정
+	            comment = new Comment();
+	            comment.setBbsID(rs.getInt(1));
+	            comment.setUserID(rs.getString(2));
+	            comment.setContent(rs.getString(3));
+	            comment.setDate(rs.getString(4));
+	            comment.setCommentavailable(rs.getString(5));
+	            comment.setCommentNo(rs.getInt(6));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace(); // 예외 정보를 콘솔에 출력
+	    }
+
+	    return comment; // 댓글 객체를 반환
+	}
+	
+	public int deleteComment(int commentNo) {
+		String SQL = "UPDATE comment SET commentAvailable = 0 WHERE commentNo = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,  commentNo);
+			return pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // database error
 	}
 
 }
