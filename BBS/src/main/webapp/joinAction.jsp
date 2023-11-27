@@ -16,7 +16,7 @@ request.setCharacterEncoding("UTF-8");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>JSP 게시판 웹사이트</title>
+<title>Dev.Yem</title>
 </head>
 <body>
 	<%
@@ -47,7 +47,7 @@ request.setCharacterEncoding("UTF-8");
 		if (-1 == result) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('이미 존재하는 아이디 입니다.')");
+			script.println("alert('ID 혹은 Email 이 사용중입니다.')");
 			script.println("history.back()"); // 이전페이지로 돌려보내기
 			script.println("</script>");
 		} else {
