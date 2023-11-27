@@ -37,7 +37,7 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return -1; // 데이터베이스 오류
+        return -1; // ID or Email 중복
     }
 
     public int login(String userID, String userPassword) {
