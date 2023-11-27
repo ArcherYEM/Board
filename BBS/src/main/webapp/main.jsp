@@ -53,6 +53,8 @@
 					<ul class="dropdown-menu">
 						<li><a href="login.jsp">로그인</a></li>
 						<li><a href="join.jsp">회원가입</a></li>
+						<li><a href="findID.jsp">ID 찾기</a></li>
+						<li><a href="findPW.jsp">PW 찾기</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -77,8 +79,8 @@
 	<div class="container">
 		<div class="jumbotron">
 			<div class="continer">
-				<h1>웹 사이트 소개</h1>
-				<p>이 사이트는 부트스트랩을 이용하여 제작하였습니다.<br/>
+				<h1>[ 공지사항 ]</h1>
+				<p><br/>이 사이트는 부트스트랩을 이용하여 제작하였습니다.<br/>
 				최종적인 커스터마이징은 Dev.Yem 이 완료하였습니다.</p>
 				<p><a class="btn btn-primary btn-pull" href="https://github.com/ArcherYEM" target="_blank" role="button">Dev.Yem Git-Hub</a></p>
 			</div>
