@@ -140,7 +140,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><textarea class="form-control" placeholder="댓글 내용" name="content" maxlength="2048" style="height:100px"></textarea></td>
+						<td><textarea class="form-control" placeholder="댓글 내용" name="content" maxlength="2048" style="height:100px; resize: none;"></textarea></td>
 					</tr>
 				</tbody>
 			</table>
