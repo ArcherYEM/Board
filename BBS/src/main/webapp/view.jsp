@@ -6,7 +6,7 @@
 <%@ page import="user.UserDAO"%>
 <%@ page import="comment.CommentDAO"%>
 <%@ page import="comment.Comment"%>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
 <html>
@@ -28,6 +28,7 @@
 	if (request.getParameter("bbsID") != null) {
 		bbsID = Integer.parseInt(request.getParameter("bbsID"));
 	}
+
 	if (bbsID == 0) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
@@ -45,6 +46,13 @@
 	}
 
 	User user = new UserDAO().getUser(userID);
+
+	int commentNo = 0;
+	if (request.getParameter("commentNo") != null) {
+		commentNo = Integer.parseInt(request.getParameter("commentNo"));
+	}
+
+	Comment comment = new CommentDAO().getComment(commentNo);
 	%>
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
@@ -102,14 +110,14 @@
 					<tr>
 						<td>작성일자</td>
 						<td colspan="2"><%=bbs.getBbsDate().substring(0, 11) + bbs.getBbsDate().substring(11, 13) + "시"
-						+ bbs.getBbsDate().substring(14, 16) + "분"%></td>
+		+ bbs.getBbsDate().substring(14, 16) + "분"%></td>
 					</tr>
 					<tr>
 						<td>내용</td>
 						<td colspan="2" style="text-align: left;">
 							<div style="min-height: 200px;">
 								<%=bbs.getBbsContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt").replaceAll("\n",
-						"<br>")%>
+		"<br>")%>
 							</div>
 						</td>
 					</tr>
@@ -131,22 +139,21 @@
 	<!-- 댓글 쓰기 -->
 	<div class="container">
 		<div class="row">
-		<form method="post" action="commentAction.jsp">
-			<table class="table table-striped" style="text-align:center; border: 1px solid #dddddd">
-				<thead>
-					<tr>
-						<th colspan="2" style="background-color: #eeeeee; text-align: center;">댓글 작성</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><textarea class="form-control" placeholder="댓글 내용" name="content" maxlength="2048" style="height:100px; resize: none;"></textarea></td>
-					</tr>
-				</tbody>
-			</table>
-			<input type="submit" class="btn btn-primary pull-right" value="등록">
-			<input type="hidden" name="bbsID" value="<%= bbsID %>">
-		</form>
+			<form method="post" action="commentAction.jsp">
+				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+					<thead>
+						<tr>
+							<th colspan="2" style="background-color: #eeeeee; text-align: center;">댓글 작성</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><textarea class="form-control" placeholder="댓글 내용" name="content" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
+						</tr>
+					</tbody>
+				</table>
+				<input type="submit" class="btn btn-primary pull-right" value="등록"> <input type="hidden" name="bbsID" value="<%=bbsID%>">
+			</form>
 		</div>
 	</div>
 	<br />
@@ -154,34 +161,35 @@
 	<!-- 댓글 보기 -->
 	<div class="container">
 		<div class="row">
-		<br/>
+			<br />
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 				</thead>
 				<tbody>
-				<%
-				CommentDAO commentDAO = new CommentDAO();
-				ArrayList<Comment> list = commentDAO.getList(bbsID);
-				for(int i = 0; i < list.size(); i++){
-				%>
+					<%
+					CommentDAO commentDAO = new CommentDAO();
+					ArrayList<Comment> list = commentDAO.getList(bbsID);
+					for (int i = 0; i < list.size(); i++) {
+					%>
 					<tr>
+						<td colspan="1" style="text-align: left;"><%=list.get(i).getCommentNo()%></td>
 						<td colspan="1" style="text-align: left;"><%=list.get(i).getUserID()%></td>
-						<td colspan="1" style="text-align: right;"><%=
-							list.get(i).getDate().substring(0, 11)
-							+ list.get(i).getDate().substring(11, 13) + ":"
-							+ list.get(i).getDate().substring(14, 16)
-							%></td>
+						<td colspan="1" style="text-align: right;"><%=list.get(i).getDate().substring(0, 11) + list.get(i).getDate().substring(11, 13) + ":"
+		+ list.get(i).getDate().substring(14, 16)%></td>
 					</tr>
 					<tr>
-						<td colspan="3" style="text-align: left;">
+						<td colspan="4" style="text-align: left;">
 							<div style="min-height: 50px;">
-								<%= list.get(i).getContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt").replaceAll("\n",
-										"<br>") %>
+								<%=list.get(i).getContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt")
+		.replaceAll("\n", "<br>")%>
+							</div>
+							<div>
+								<a onclick="return confirm('해당 댓글을 삭제합니다')" href="commentDeleteAction.jsp?commentNo=<%=list.get(i).getCommentNo()%>" class="btn btn-primary pull-right">삭제</a>
 							</div>
 						</td>
 					</tr>
 					<%
-				}
+					}
 					%>
 				</tbody>
 			</table>
