@@ -24,7 +24,7 @@ public class UserDAO {
 	}
 
 	public int join(User user) {
-        String SQL = "INSERT INTO USER (userID, userPassword, userName, userGender, userEmail)"
+        String SQL = "INSERT INTO user (userID, userPassword, userName, userGender, userEmail)"
         		+ " VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -41,7 +41,7 @@ public class UserDAO {
     }
 
     public int login(String userID, String userPassword) {
-        String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
+        String SQL = "SELECT userPassword FROM user WHERE userID = ?";
         try {
             pstmt = conn.prepareStatement(SQL);
             pstmt.setString(1, userID);
@@ -72,7 +72,7 @@ public class UserDAO {
     	} catch(Exception e) {
     		e.printStackTrace();
     	}
-    	return "회원";
+    	return "비회원";
     }
     
     public User getUser(String userID) {
@@ -95,5 +95,42 @@ public class UserDAO {
 		}
 		return null;
 	}
+    
+    public String findID(String userName, String userEmail) {
+    	String SQL = "SELECT userID FROM user WHERE userName = ? AND userEmail = ?";
+    	try {
+    		pstmt = conn.prepareStatement(SQL);
+    		pstmt.setString(1, userName);
+    		pstmt.setString(2, userEmail);
+    		rs = pstmt.executeQuery();
+    		if (rs.next()) {
+    			return rs.getString("userID");
+    		} else {
+    			System.out.println("DAO 클래스의 rs : " + rs);
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return null; // findID Error
+    }
+    
+    public String findPW(String userID, String userName, String userEmail) {
+    	String SQL = "SELECT userPassword FROM user WHERE userID = ? AND userName = ? AND userEmail = ?";
+    	try {
+    		pstmt = conn.prepareStatement(SQL);
+    		pstmt.setString(1, userID);
+    		pstmt.setString(2, userName);
+    		pstmt.setString(3, userEmail);
+    		rs = pstmt.executeQuery();
+    		if (rs.next()) {
+    			return rs.getString("userPassword");
+    		} else {
+    			System.out.println("DAO 클래스의 rs : " + rs);
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return null; // findPW Error
+    }
 
 }
