@@ -48,8 +48,8 @@
 			<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="main.jsp" style="font-size:25px;">
-            	Dev.YEM
-        	</a>
+       	Dev.YEM
+     	</a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
@@ -115,8 +115,8 @@
 						<td><%= list.get(i).getUserID() %></td>
 						<td><%=
 							list.get(i).getBbsDate().substring(0, 11)
-							+ list.get(i).getBbsDate().substring(11, 13) + "시"
-							+ list.get(i).getBbsDate().substring(14, 16) + "분"
+							+ list.get(i).getBbsDate().substring(11, 13) + ":"
+							+ list.get(i).getBbsDate().substring(14, 16)
 							%>
 						</td>
 					</tr>
@@ -128,12 +128,14 @@
 			<%
 			if (1 != pageNumber){
 			%>
-				<a href="bbs.jsp?pageNumber=<%= pageNumber - 1 %>" class="btn btn-success btn-arraw-left" style="display:flext">이전</a>
+				<a href="bbs.jsp?pageNumber=<%= pageNumber - 1 %>" 
+				class="btn btn-success btn-arraw-left" style="display:flext">이전</a>
 			<%
 			}
 			if (bbsDAO.nextPage(pageNumber + 1)){
 			%>
-				<a href="bbs.jsp?pageNumber=<%= pageNumber + 1 %>" class="btn btn-success btn-arraw-left">다음</a>
+				<a href="bbs.jsp?pageNumber=<%= pageNumber + 1 %>" 
+				class="btn btn-success btn-arraw-left">다음</a>
 			<%
 			}
 			%>
