@@ -7,6 +7,7 @@ public class Comment {
 	private String content;
 	private String date;
 	private String commentavailable;
+	private int commentNo;
 	
 	public int getBbsID() {
 		return bbsID;
@@ -39,6 +40,12 @@ public class Comment {
 		this.commentavailable = commentavailable;
 	}
 	
+	public int getCommentNo() {
+		return commentNo;
+	}
 	
+	public void setCommentNo(int commentNo) {
+		this.commentNo = commentNo;
+	}
 
 }
