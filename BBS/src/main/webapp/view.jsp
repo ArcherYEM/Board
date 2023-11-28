@@ -133,8 +133,8 @@
 			%>
 			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
 		</div>
+		<hr style="border: solid 1px; color:lightgray"/>
 	</div>
-	<br />
 
 	<!-- 댓글 쓰기 -->
 	<div class="container">
@@ -148,20 +148,20 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td><textarea class="form-control" placeholder="댓글 내용" name="content" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
+							<td><textarea class="form-control" placeholder="댓글 내용" name="content"
+							 maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
 						</tr>
 					</tbody>
 				</table>
 				<input type="submit" class="btn btn-primary pull-right" value="등록"> <input type="hidden" name="bbsID" value="<%=bbsID%>">
 			</form>
 		</div>
+		<hr style="border: solid 1px; color:lightgray"/>
 	</div>
-	<br />
 
 	<!-- 댓글 보기 -->
 	<div class="container">
 		<div class="row">
-			<br />
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 				</thead>
@@ -172,13 +172,12 @@
 					for (int i = 0; i < list.size(); i++) {
 					%>
 					<tr>
-						<td colspan="1" style="text-align: left;"><%=list.get(i).getCommentNo()%></td>
 						<td colspan="1" style="text-align: left;"><%=list.get(i).getUserID()%></td>
 						<td colspan="1" style="text-align: right;"><%=list.get(i).getDate().substring(0, 11) + list.get(i).getDate().substring(11, 13) + ":"
 		+ list.get(i).getDate().substring(14, 16)%></td>
 					</tr>
 					<tr>
-						<td colspan="4" style="text-align: left;">
+						<td colspan="4" style="text-align: left; padding-right:0;">
 							<div style="min-height: 50px;">
 								<%=list.get(i).getContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt")
 		.replaceAll("\n", "<br>")%>
